@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CustomerMapper">
+	<!-- 查询所有的客户信息 -->
+	<select id="findAllCustomer" resultType="Customer">
+		select * from customer
+	</select>
+	 
+	 <!-- 分页查询的客户信息 -->
+	<select id="findCustomersByPage" parameterType="Map" resultType="Customer">
+		select * from customer order by customer_code limit #{start},#{size}
+	</select>
+	
+	<select id="findAllCustomersNum" resultType="int">
+		select count(*) from customer
+	</select>
+	
+	<!-- code查询用户 -->
+	<select id="findCustomerByCode" parameterType="Integer" resultType="Customer">
+		select * from customer where customer_code = #{customer_code}
+	</select>
+	
+	<insert id="addCustomer" parameterType="Customer">
+		insert into customer(customer_code,customer_name,customer_adress,customer_phone,customer_password,customer_allmoney)
+		values(#{customer_code},#{customer_name},#{customer_adress},#{customer_phone},#{customer_password},#{customer_allmoney})
+	</insert>
+	
+	<delete id="deleteCustomer" parameterType="Integer">
+		delete from customer where customer_code=#{customer_code}
+	</delete>
+	
+	<update id="updateCustomer" parameterType="Customer">
+		update customer set customer_name=#{customer_name},customer_adress=#{customer_adress},customer_phone=#{customer_phone},
+		customer_password=#{customer_password},customer_allmoney=#{customer_allmoney} where customer_code=#{customer_code}
+	</update>
+</mapper>
